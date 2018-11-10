@@ -18,4 +18,6 @@ module.exports = {
 ```
 Replace these example values with the ones that match _**your own mlab URI string**_. The values for `<dbuser>` and `<dbpassword>` will be the username and password you had recently created through your new database's _"Users"_ tab.
 
+Start the server in development mode by running `npm start dev` or `yarn dev`.
+
 _At this stage of development, this is all that is required to setup and run this project_

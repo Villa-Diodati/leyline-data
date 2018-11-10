@@ -6,6 +6,9 @@
   "repository": "git@github.com:Villa-Diodati/leyline-data.git",
   "author": "Nihilates",
   "license": "MIT",
+  "scripts": {
+    "dev": "NODE_ENV=develop node index.js"
+  },
   "dependencies": {
     "express": "^4.16.4",
     "mongoose": "^5.3.11",
