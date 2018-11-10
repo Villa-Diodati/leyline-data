@@ -1,11 +1,15 @@
 const path = require('path')
 const express = require('express')
 
+const database = require('./utils/database')
+
 const app = express()
+
+database.connect()
 
 const port = process.env.PORT || 3000
 const server = app.listen(port, () => {
-  console.log(`Scrying port ${server.address().port}...`)
+  console.log(`Scrying port ${server.address().port}...\n`)
 })
 
 process.on('SIGTERM', async () => {
