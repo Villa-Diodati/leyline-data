@@ -1,0 +1,13 @@
+{
+  "name": "leyline-data",
+  "version": "1.0.0",
+  "description": "A Node server to manage the data transactions for the Leyline tabletop inventory app.",
+  "main": "index.js",
+  "repository": "git@github.com:Villa-Diodati/leyline-data.git",
+  "author": "Nihilates",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "path": "^0.12.7"
+  }
+}
