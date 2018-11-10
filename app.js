@@ -7,6 +7,10 @@ const app = express()
 
 database.connect()
 
+require('./api/users/Users')
+
+app.use('/api', require('./api'))
+
 const port = process.env.PORT || 3000
 const server = app.listen(port, () => {
   console.log(`Scrying port ${server.address().port}...\n`)
