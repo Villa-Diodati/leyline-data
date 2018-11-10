@@ -1,8 +1,12 @@
 const router = require('express').Router()
 
-const { make } = require('./controller')
+const {
+  adjustQuery,
+  findUserById,
+} = require('./controller')
+const send = require('../send')
 
 router.route('/')
-  .post(make)
+  .get(adjustQuery, findUserById, send)
 
 module.exports = router
