@@ -4,4 +4,5 @@ module.exports = {
   ds: null, // Replace with mlab DS number
   mlabPort: null, // Replace with mlab port
   mlabDBName: null, // Replace with mlab database name
+  secret: null, // Replace with a unique and guarded secret string
 }
