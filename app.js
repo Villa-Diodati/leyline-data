@@ -1,13 +1,17 @@
 const path = require('path')
 const express = require('express')
+const bodyParser = require('body-parser')
 
 const database = require('./utils/database')
 
 const app = express()
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 database.connect()
 
 require('./api/users/Users')
+require('./config/passport')
 
 app.use('/api', require('./api'))
 
