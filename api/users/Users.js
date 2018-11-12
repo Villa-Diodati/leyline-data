@@ -69,6 +69,9 @@ UserSchema.methods = {
       _id: this._id,
       name: this.name,
       email: this.email,
+      bio: this.bio,
+      characters: this.characters,
+      tables: this.tables,
       token: this.generateJWT(),
     }
   },

@@ -43,7 +43,7 @@ const userControls = {
       user.set({...body, email: newEmail || email })
       user.save()
         .then(user => {
-          res.locals.data = { user }
+          res.locals.data = { user: user.toJSON() }
           next()
         })
         .catch(error => (
