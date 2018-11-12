@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 const passport = require('passport')
 
+const handleErr = require('../handleErr')
+
 const User = mongoose.model('User')
 
 const userControls = {
@@ -22,17 +24,46 @@ const userControls = {
       const user = new User({ name, email })
       user.setPassword(password)
       user.save()
-      .then(() => {
-        res.locals.data = { user: user.toAuthJSON() }
-        next()
-      })
-      .catch(error => {
-        res.locals = { status: 500, data: error }
-        next()
-      })
+        .then(() => {
+          res.locals.data = { user: user.toAuthJSON() }
+          next()
+        })
+        .catch(error => (
+          handleErr({ message: error, res, next })
+        ))
     } else {
-      next()
+      handleErr({ message: 'no password provided', res, next })
     }
+  },
+
+  updateUser: async (req, res, next) => {
+    const { body, body: { email, newEmail }, params: _id } = req
+    const user = await User.findOne({ email, _id })
+    if (user) {
+      user.set({...body, email: newEmail || email })
+      user.save()
+        .then(user => {
+          res.locals.data = { user: user.toJSON() }
+          next()
+        })
+        .catch(error => (
+          handleErr({ message: error, res, next })
+        ))
+    } else {
+      handleErr({ message: 'no such email / _id pair exists', res, next })
+    }
+  },
+
+  deleteUser: (req, res, next) => {
+    const { body: { email }, params: _id } = req
+    User.deleteOne({ email, _id })
+      .then(({ n: result }) => {
+        res.locals.data = { user: result ? 'deleted' : 'not found' }
+        next()
+      })
+      .catch(error => (
+        handleErr({ message: error, res, next })
+      ))
   },
 
   loginUser: (req, res, next) => {
@@ -48,17 +79,18 @@ const userControls = {
 
   findUserByQuery: (req, res, next) => {
     const { query } = res.locals
-    query ?
+    if (query) {
       User.findOne(query)
-      .then(user => {
-        res.locals.data = { user: user.toPublicJSON() }
-        next()
-      })
-      .catch(error => {
-        res.locals = { status: 500, data: error }
-        next()
-      })
-    : next()
+        .then(user => {
+          res.locals.data = { user: user.toPublicJSON() }
+          next()
+        })
+        .catch(error => (
+          handleErr({ message: error, res, next })
+        ))
+    } else {
+      handleErr({ message: 'no apparent query', res, next })
+    }
   },
 
   findFullUserByID: (req, res, next) => {
@@ -68,10 +100,9 @@ const userControls = {
         res.locals.data = { user }
         next()
       })
-      .catch(error => {
-        res.locals = { status: 500, data: error }
-        next()
-      })
+      .catch(error => (
+        handleErr({ message: error, res, next })
+      ))
   }
 }
 

@@ -8,15 +8,19 @@ const UserSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "can't be blank"],
+      required: [true, 'can\'t be blank'],
     },
     email: {
       type: String,
       lowercase: true,
       unique: true,
-      required: [true, "can't be blank"],
+      required: [true, 'can\'t be blank'],
       index: true,
     },
+    bio: String,
+    characters: Array,
+    tables: Array,
+    friends: Array,
     hash: String,
     salt: String,
   }
@@ -51,15 +55,23 @@ UserSchema.methods = {
 
   toJSON: function() {
     return {
+      _id: this._id,
       name: this.name,
       email: this.email,
+      bio: this.bio,
+      characters: this.characters,
+      tables: this.tables,
     }
   },
 
   toAuthJSON: function() {
     return {
+      _id: this._id,
       name: this.name,
       email: this.email,
+      bio: this.bio,
+      characters: this.characters,
+      tables: this.tables,
       token: this.generateJWT(),
     }
   },
@@ -67,6 +79,7 @@ UserSchema.methods = {
   toPublicJSON: function() {
     return {
       name: this.name,
+      bio: this.bio,
     }
   }
 }
