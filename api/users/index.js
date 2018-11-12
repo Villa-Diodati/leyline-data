@@ -4,6 +4,8 @@ const passport = require('passport')
 const {
   adjustQuery,
   createUser,
+  updateUser,
+  deleteUser,
   loginUser,
   findUserByQuery,
   findFullUserByID,
@@ -17,6 +19,21 @@ router.route('/create')
     send,
   )
 
+router.route('/:_id')
+  .all(auth.required)
+  .get(
+    findFullUserByID,
+    send,
+  )
+  .put(
+    updateUser,
+    send,
+  )
+  .delete(
+    deleteUser,
+    send,
+  )
+
 router.route('/login')
   .post(
     loginUser,
@@ -27,13 +44,6 @@ router.route('/find')
   .get(
     adjustQuery,
     findUserByQuery,
-    send,
-  )
-
-router.route('/find/:_id')
-  .get(
-    auth.required,
-    findFullUserByID,
     send,
   )
 
