@@ -15,4 +15,4 @@ passport.use(new LocalStrategy({
       : done(null, user)
     ))
     .catch(done)
-  ))
+))

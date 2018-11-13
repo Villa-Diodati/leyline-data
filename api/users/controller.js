@@ -29,28 +29,28 @@ const userControls = {
           next()
         })
         .catch(error => (
-          handleErr({ message: error, res, next })
+          handleErr({ msg: error, res, next })
         ))
     } else {
-      handleErr({ message: 'no password provided', res, next })
+      handleErr({ msg: 'no password provided', res, next })
     }
   },
 
   updateUser: async (req, res, next) => {
-    const { body, body: { email, newEmail }, params: _id } = req
+    const { body, body: { email, newEmail }, params: { _id } } = req
     const user = await User.findOne({ email, _id })
     if (user) {
       user.set({...body, email: newEmail || email })
       user.save()
-        .then(user => {
-          res.locals.data = { user: user.toJSON() }
+        .then(savedUser => {
+          res.locals.data = { user: savedUser.toJSON() }
           next()
         })
         .catch(error => (
-          handleErr({ message: error, res, next })
+          handleErr({ msg: error, res, next })
         ))
     } else {
-      handleErr({ message: 'no such email / _id pair exists', res, next })
+      handleErr({ msg: 'no such email / _id pair exists', res, next })
     }
   },
 
@@ -62,7 +62,7 @@ const userControls = {
         next()
       })
       .catch(error => (
-        handleErr({ message: error, res, next })
+        handleErr({ msg: error, res, next })
       ))
   },
 
@@ -86,10 +86,10 @@ const userControls = {
           next()
         })
         .catch(error => (
-          handleErr({ message: error, res, next })
+          handleErr({ msg: error, res, next })
         ))
     } else {
-      handleErr({ message: 'no apparent query', res, next })
+      handleErr({ msg: 'no apparent query', res, next })
     }
   },
 
@@ -101,7 +101,7 @@ const userControls = {
         next()
       })
       .catch(error => (
-        handleErr({ message: error, res, next })
+        handleErr({ msg: error, res, next })
       ))
   }
 }

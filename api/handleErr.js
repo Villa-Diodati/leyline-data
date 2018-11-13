@@ -1,5 +1,5 @@
 const handleErr = ({
-  message = 'unexpected error',
+  msg = 'unexpected error',
   status = 500,
   fatal = false,
   res,
@@ -8,7 +8,7 @@ const handleErr = ({
   res.locals = {
     status,
     fatal,
-    data: { error: message }
+    data: { error: msg }
   }
   next()
 }
