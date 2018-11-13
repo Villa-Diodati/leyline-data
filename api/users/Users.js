@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema(
       index: true,
     },
     bio: String,
-    characters: Array,
+    characters: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Character' } ],
     tables: Array,
     friends: Array,
     hash: String,

@@ -10,6 +10,8 @@ app.use(bodyParser.json())
 database.connect()
 
 require('./api/users/Users')
+require('./api/characters/Characters')
+require('./api/characters/CharacterVersions')
 require('./config/passport')
 
 app.use('/api', require('./api'))
